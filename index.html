@@ -36,12 +36,7 @@
       letter-spacing: 0.3em;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
     .nav-links a {
       color: #f5f5f5;
       text-decoration: none;
@@ -174,6 +169,55 @@
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    .about {
+      padding: 8rem 3rem;
+      border-top: 1px solid rgba(245,245,245,0.06);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .about-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      opacity: 0.2;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .about-label::before {
+      content: '';
+      display: inline-block;
+      width: 30px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .about-text {
+      font-size: 0.75rem;
+      line-height: 2;
+      letter-spacing: 0.08em;
+      opacity: 0.35;
+    }
+
+    .about-text span {
+      opacity: 1;
+      color: #f5f5f5;
+    }
+
+    footer {
+      border-top: 1px solid rgba(245,245,245,0.06);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.15;
+    }
   </style>
 </head>
 <body>
@@ -181,9 +225,7 @@
   <nav>
     <div class="nav-logo">Enviable</div>
     <ul class="nav-links">
-      <li><a href="#">Community</a></li>
-      <li><a href="#">Games</a></li>
-      <li><a href="#">Events</a></li>
+      <li><a href="#about">About Us</a></li>
       <li><a href="https://discord.gg/EPTUcyAwDW" target="_blank" class="join">Join</a></li>
     </ul>
     <a href="https://discord.gg/EPTUcyAwDW" target="_blank" class="nav-join-mobile">Join</a>
@@ -206,6 +248,19 @@
   <div class="hero">
     <h1>ENVIABLE</h1>
   </div>
+
+  <section class="about" id="about">
+    <p class="about-label">About Us</p>
+    <p class="about-text">
+      A <span>small german community</span> caring about
+      <span>games</span>, <span>money</span> and <span>memes</span>.
+    </p>
+  </section>
+
+  <footer>
+    <span>© 2025 Enviable</span>
+    <span>German Gaming Community</span>
+  </footer>
 
   <script>
     const track = document.getElementById('sliderTrack');
