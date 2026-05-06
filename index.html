@@ -6,11 +6,7 @@
   <title>Enviable</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
       width: 100%;
@@ -40,12 +36,7 @@
       letter-spacing: 0.3em;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
       color: #f5f5f5;
       text-decoration: none;
@@ -55,7 +46,6 @@
       opacity: 0.35;
       transition: opacity 0.2s;
     }
-
     .nav-links a:hover { opacity: 1; }
 
     .slider-section {
@@ -63,16 +53,13 @@
       border-bottom: 1px solid rgba(245,245,245,0.06);
     }
 
-    .slider-wrapper {
-      position: relative;
-      overflow: hidden;
-    }
+    .slider-wrapper { position: relative; overflow: hidden; }
 
     .slider-track {
       display: flex;
       gap: 12px;
       padding: 0 12px;
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: transform;
     }
 
@@ -88,10 +75,7 @@
       flex-shrink: 0;
     }
 
-    .slide-card:hover {
-      background: #151515;
-      border-color: rgba(245,245,245,0.14);
-    }
+    .slide-card:hover { background: #151515; border-color: rgba(245,245,245,0.14); }
 
     .slide-text {
       font-size: 0.5rem;
@@ -109,18 +93,13 @@
       border-top: 1px solid rgba(245,245,245,0.05);
     }
 
-    .ctrl-left {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
+    .ctrl-left { display: flex; align-items: center; gap: 0.8rem; }
 
     .slider-btn {
       background: none;
       border: 1px solid rgba(245,245,245,0.12);
       color: #f5f5f5;
-      width: 26px;
-      height: 26px;
+      width: 26px; height: 26px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -128,35 +107,18 @@
       transition: border-color 0.2s, background 0.2s;
       font-size: 0.7rem;
     }
+    .slider-btn:hover { border-color: rgba(245,245,245,0.4); background: rgba(245,245,245,0.04); }
 
-    .slider-btn:hover {
-      border-color: rgba(245,245,245,0.4);
-      background: rgba(245,245,245,0.04);
-    }
+    .slider-progress { font-size: 0.48rem; letter-spacing: 0.2em; opacity: 0.2; }
 
-    .slider-progress {
-      font-size: 0.48rem;
-      letter-spacing: 0.2em;
-      opacity: 0.2;
-    }
-
-    .slider-dots {
-      display: flex;
-      gap: 5px;
-    }
-
+    .slider-dots { display: flex; gap: 5px; }
     .dot {
-      width: 14px;
-      height: 1px;
+      width: 14px; height: 1px;
       background: rgba(245,245,245,0.2);
       transition: background 0.3s, width 0.3s;
       cursor: pointer;
     }
-
-    .dot.active {
-      background: #f5f5f5;
-      width: 24px;
-    }
+    .dot.active { background: #f5f5f5; width: 24px; }
 
     .hero {
       height: 100vh;
@@ -217,7 +179,6 @@
     const dotsContainer = document.getElementById('dotsContainer');
 
     const TOTAL = 25;
-    const VISIBLE = 5;
     const GAP = 12;
     let current = 0;
 
@@ -228,11 +189,10 @@
       track.appendChild(card);
     }
 
-    const pages = Math.ceil(TOTAL / VISIBLE);
-    for (let i = 0; i < pages; i++) {
+    for (let i = 0; i < TOTAL; i++) {
       const dot = document.createElement('div');
       dot.className = 'dot' + (i === 0 ? ' active' : '');
-      dot.addEventListener('click', () => goTo(i * VISIBLE));
+      dot.addEventListener('click', () => goTo(i));
       dotsContainer.appendChild(dot);
     }
 
@@ -243,21 +203,21 @@
 
     function goTo(index) {
       if (index >= TOTAL) index = 0;
-      if (index < 0) index = TOTAL - VISIBLE;
+      if (index < 0) index = TOTAL - 1;
       current = index;
       track.style.transform = `translateX(-${current * getCardWidth()}px)`;
       progressText.textContent = `${String(current + 1).padStart(2,'0')} / ${TOTAL}`;
       document.querySelectorAll('.dot').forEach((d, i) => {
-        d.classList.toggle('active', i === Math.floor(current / VISIBLE));
+        d.classList.toggle('active', i === current);
       });
     }
 
-    prevBtn.addEventListener('click', () => goTo(current - VISIBLE));
-    nextBtn.addEventListener('click', () => goTo(current + VISIBLE));
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
 
     document.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') goTo(current + VISIBLE);
-      if (e.key === 'ArrowLeft') goTo(current - VISIBLE);
+      if (e.key === 'ArrowRight') goTo(current + 1);
+      if (e.key === 'ArrowLeft') goTo(current - 1);
     });
   </script>
 
