@@ -24,7 +24,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.5rem 3rem;
+      padding: 1.2rem 1.5rem;
       border-bottom: 1px solid rgba(245,245,245,0.08);
       backdrop-filter: blur(12px);
       background: rgba(5,5,5,0.75);
@@ -36,7 +36,12 @@
       letter-spacing: 0.3em;
     }
 
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
     .nav-links a {
       color: #f5f5f5;
       text-decoration: none;
@@ -54,8 +59,24 @@
     }
     .nav-links a.join:hover { opacity: 1; border-color: #f5f5f5; }
 
+    .nav-join-mobile {
+      display: none;
+      color: #f5f5f5;
+      text-decoration: none;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border: 1px solid rgba(245,245,245,0.3);
+      padding: 0.35rem 0.9rem;
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-join-mobile { display: block; }
+    }
+
     .slider-section {
-      padding-top: 80px;
+      padding-top: 70px;
       border-bottom: 1px solid rgba(245,245,245,0.06);
     }
 
@@ -63,15 +84,15 @@
 
     .slider-track {
       display: flex;
-      gap: 12px;
-      padding: 0 12px;
+      gap: 8px;
+      padding: 0 8px;
       transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: transform;
     }
 
     .slide-card {
-      min-width: calc((100vw - 5 * 12px - 12px) / 5);
-      height: 90px;
+      min-width: calc((100vw - 5 * 8px - 8px) / 5);
+      height: 80px;
       background: #0d0d0d;
       display: flex;
       align-items: center;
@@ -85,8 +106,8 @@
     .slide-card:hover { background: #151515; border-color: rgba(245,245,245,0.14); }
 
     .slide-text {
-      font-size: 0.5rem;
-      letter-spacing: 0.3em;
+      font-size: 0.45rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       opacity: 0.18;
     }
@@ -95,14 +116,14 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      padding: 8px;
+      padding: 6px;
     }
 
     .slider-controls {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.7rem 1.2rem;
+      padding: 0.6rem 1rem;
       background: #050505;
       border-top: 1px solid rgba(245,245,245,0.05);
     }
@@ -123,16 +144,16 @@
     }
     .slider-btn:hover { border-color: rgba(245,245,245,0.4); background: rgba(245,245,245,0.04); }
 
-    .slider-progress { font-size: 0.48rem; letter-spacing: 0.2em; opacity: 0.2; }
+    .slider-progress { font-size: 0.45rem; letter-spacing: 0.15em; opacity: 0.2; }
 
-    .slider-dots { display: flex; gap: 5px; }
+    .slider-dots { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; max-width: 50%; }
     .dot {
-      width: 14px; height: 1px;
+      width: 12px; height: 1px;
       background: rgba(245,245,245,0.2);
       transition: background 0.3s, width 0.3s;
       cursor: pointer;
     }
-    .dot.active { background: #f5f5f5; width: 24px; }
+    .dot.active { background: #f5f5f5; width: 20px; }
 
     .hero {
       height: 100vh;
@@ -143,7 +164,7 @@
 
     .hero h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(7rem, 20vw, 18rem);
+      font-size: clamp(5rem, 20vw, 18rem);
       color: #f5f5f5;
       letter-spacing: 0.05em;
       animation: fadeIn 1.5s ease both;
@@ -165,6 +186,7 @@
       <li><a href="#">Events</a></li>
       <li><a href="https://discord.gg/EPTUcyAwDW" target="_blank" class="join">Join</a></li>
     </ul>
+    <a href="https://discord.gg/EPTUcyAwDW" target="_blank" class="nav-join-mobile">Join</a>
   </nav>
 
   <div class="slider-section">
@@ -193,7 +215,7 @@
     const dotsContainer = document.getElementById('dotsContainer');
 
     const TOTAL = 25;
-    const GAP = 12;
+    const GAP = 8;
     let current = 0;
 
     for (let i = 1; i <= TOTAL; i++) {
