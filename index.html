@@ -4,37 +4,345 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enviable</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     html, body {
       width: 100%;
-      height: 100%;
       background: #050505;
+      color: #f5f5f5;
+      font-family: 'Space Mono', monospace;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
-      cursor: crosshair;
     }
-    h1 {
+
+    .hero h1 {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(7rem, 20vw, 18rem);
       color: #f5f5f5;
       letter-spacing: 0.05em;
       animation: fadeIn 1.5s ease both;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 1px solid rgba(245,245,245,0.08);
+      backdrop-filter: blur(12px);
+      background: rgba(5,5,5,0.75);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.3em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #f5f5f5;
+      text-decoration: none;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.35;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    /* ── SLIDER ── */
+    .slider-section {
+      padding: 6rem 0 6rem;
+      border-top: 1px solid rgba(245,245,245,0.06);
+    }
+
+    .slider-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      opacity: 0.2;
+      padding: 0 3rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .slider-label::before {
+      content: '';
+      display: inline-block;
+      width: 30px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .slider-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slider-wrapper::before,
+    .slider-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .slider-wrapper::before {
+      left: 0;
+      background: linear-gradient(to right, #050505, transparent);
+    }
+    .slider-wrapper::after {
+      right: 0;
+      background: linear-gradient(to left, #050505, transparent);
+    }
+
+    .slider-track {
+      display: flex;
+      gap: 1px;
+      background: rgba(245,245,245,0.06);
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+
+    .slide-card {
+      min-width: calc((100vw - 4 * 1px) / 5);
+      aspect-ratio: 3/4;
+      background: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      flex-shrink: 0;
+    }
+
+    .slide-card:hover { background: #111; }
+
+    .slide-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.12) 3px,
+        rgba(0,0,0,0.12) 4px
+      );
+      pointer-events: none;
+    }
+
+    .slide-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      opacity: 0.05;
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      line-height: 1;
+    }
+
+    .slide-placeholder {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(245,245,245,0.12);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide-placeholder svg { opacity: 0.15; }
+
+    .slide-title {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      margin-bottom: 0.4rem;
+    }
+
+    .slide-sub {
+      font-size: 0.5rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.2;
+    }
+
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem 3rem 0;
+    }
+
+    .slider-btn {
+      background: none;
+      border: 1px solid rgba(245,245,245,0.12);
+      color: #f5f5f5;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+      font-size: 0.8rem;
+    }
+
+    .slider-btn:hover {
+      border-color: rgba(245,245,245,0.4);
+      background: rgba(245,245,245,0.04);
+    }
+
+    .slider-progress {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      opacity: 0.25;
+    }
+
+    .slider-dots {
+      display: flex;
+      gap: 6px;
+      margin-left: auto;
+    }
+
+    .dot {
+      width: 16px;
+      height: 1px;
+      background: rgba(245,245,245,0.2);
+      transition: background 0.3s, width 0.3s;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: #f5f5f5;
+      width: 28px;
+    }
   </style>
 </head>
 <body>
-  <h1>ENVIABLE</h1>
+
+  <nav>
+    <div class="nav-logo">Enviable</div>
+    <ul class="nav-links">
+      <li><a href="#">Community</a></li>
+      <li><a href="#">Games</a></li>
+      <li><a href="#">Events</a></li>
+      <li><a href="#">Join</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <h1>ENVIABLE</h1>
+  </div>
+
+  <section class="slider-section">
+    <p class="slider-label">Members</p>
+    <div class="slider-wrapper">
+      <div class="slider-track" id="sliderTrack"></div>
+    </div>
+    <div class="slider-controls">
+      <button class="slider-btn" id="prevBtn">&#8592;</button>
+      <button class="slider-btn" id="nextBtn">&#8594;</button>
+      <span class="slider-progress" id="progressText">01 / 25</span>
+      <div class="slider-dots" id="dotsContainer"></div>
+    </div>
+  </section>
+
+  <script>
+    const track = document.getElementById('sliderTrack');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressText = document.getElementById('progressText');
+    const dotsContainer = document.getElementById('dotsContainer');
+
+    const TOTAL = 25;
+    const VISIBLE = 5;
+    let current = 0;
+
+    for (let i = 1; i <= TOTAL; i++) {
+      const card = document.createElement('div');
+      card.className = 'slide-card';
+      card.innerHTML = `
+        <div class="slide-num">${String(i).padStart(2,'0')}</div>
+        <div class="slide-placeholder">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </div>
+        <div class="slide-title">Member ${String(i).padStart(2,'0')}</div>
+        <div class="slide-sub">Placeholder</div>
+      `;
+      track.appendChild(card);
+    }
+
+    const pages = Math.ceil(TOTAL / VISIBLE);
+    for (let i = 0; i < pages; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goTo(i * VISIBLE));
+      dotsContainer.appendChild(dot);
+    }
+
+    function getCardWidth() {
+      const card = track.querySelector('.slide-card');
+      return card ? card.offsetWidth + 1 : 0;
+    }
+
+    function goTo(index) {
+      current = Math.max(0, Math.min(index, TOTAL - VISIBLE));
+      track.style.transform = `translateX(-${current * getCardWidth()}px)`;
+      progressText.textContent = `${String(current + 1).padStart(2,'0')} / ${TOTAL}`;
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === Math.floor(current / VISIBLE));
+      });
+    }
+
+    prevBtn.addEventListener('click', () => goTo(current - VISIBLE));
+    nextBtn.addEventListener('click', () => goTo(current + VISIBLE));
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') goTo(current + VISIBLE);
+      if (e.key === 'ArrowLeft') goTo(current - VISIBLE);
+    });
+  </script>
+
 </body>
 </html>
