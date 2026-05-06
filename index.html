@@ -34,6 +34,9 @@
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.3rem;
       letter-spacing: 0.3em;
+      cursor: pointer;
+      text-decoration: none;
+      color: #f5f5f5;
     }
 
     .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
@@ -45,6 +48,7 @@
       text-transform: uppercase;
       opacity: 0.35;
       transition: opacity 0.2s;
+      cursor: pointer;
     }
     .nav-links a:hover { opacity: 1; }
     .nav-links a.join {
@@ -69,6 +73,9 @@
       .nav-links { display: none; }
       .nav-join-mobile { display: block; }
     }
+
+    .page { display: none; min-height: 100vh; }
+    .page.active { display: block; }
 
     .slider-section {
       padding-top: 70px;
@@ -151,7 +158,7 @@
     .dot.active { background: #f5f5f5; width: 20px; }
 
     .hero {
-      height: 100vh;
+      height: calc(100vh - 150px);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -170,9 +177,14 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .about {
-      padding: 8rem 3rem;
-      border-top: 1px solid rgba(245,245,245,0.06);
+    #page-about { padding-top: 70px; }
+
+    .about-inner {
+      min-height: calc(100vh - 70px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem;
       max-width: 900px;
       margin: 0 auto;
     }
@@ -182,7 +194,7 @@
       letter-spacing: 0.4em;
       text-transform: uppercase;
       opacity: 0.2;
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem;
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -197,10 +209,10 @@
     }
 
     .about-text {
-      font-size: 0.75rem;
-      line-height: 2;
+      font-size: 0.85rem;
+      line-height: 2.2;
       letter-spacing: 0.08em;
-      opacity: 0.35;
+      opacity: 0.3;
     }
 
     .about-text span {
@@ -223,46 +235,61 @@
 <body>
 
   <nav>
-    <div class="nav-logo">Enviable</div>
+    <a class="nav-logo" onclick="showPage('home')">Enviable</a>
     <ul class="nav-links">
-      <li><a href="#about">About Us</a></li>
+      <li><a onclick="showPage('about')">About Us</a></li>
       <li><a href="https://discord.gg/EPTUcyAwDW" target="_blank" class="join">Join</a></li>
     </ul>
     <a href="https://discord.gg/EPTUcyAwDW" target="_blank" class="nav-join-mobile">Join</a>
   </nav>
 
-  <div class="slider-section">
-    <div class="slider-wrapper">
-      <div class="slider-track" id="sliderTrack"></div>
-    </div>
-    <div class="slider-controls">
-      <div class="ctrl-left">
-        <button class="slider-btn" id="prevBtn">&#8592;</button>
-        <button class="slider-btn" id="nextBtn">&#8594;</button>
-        <span class="slider-progress" id="progressText">01 / 25</span>
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+    <div class="slider-section">
+      <div class="slider-wrapper">
+        <div class="slider-track" id="sliderTrack"></div>
       </div>
-      <div class="slider-dots" id="dotsContainer"></div>
+      <div class="slider-controls">
+        <div class="ctrl-left">
+          <button class="slider-btn" id="prevBtn">&#8592;</button>
+          <button class="slider-btn" id="nextBtn">&#8594;</button>
+          <span class="slider-progress" id="progressText">01 / 25</span>
+        </div>
+        <div class="slider-dots" id="dotsContainer"></div>
+      </div>
     </div>
+    <div class="hero">
+      <h1>ENVIABLE</h1>
+    </div>
+    <footer>
+      <span>© 2025 Enviable</span>
+      <span>German Gaming Community</span>
+    </footer>
   </div>
 
-  <div class="hero">
-    <h1>ENVIABLE</h1>
+  <!-- ABOUT -->
+  <div class="page" id="page-about">
+    <div class="about-inner">
+      <p class="about-label">About Us</p>
+      <p class="about-text">
+        A <span>small german community</span> caring about
+        <span>games</span>, <span>money</span> and <span>memes</span>.<br><br>
+        We are <span>chronically online</span> — and proud of it.
+      </p>
+    </div>
+    <footer>
+      <span>© 2025 Enviable</span>
+      <span>German Gaming Community</span>
+    </footer>
   </div>
-
-  <section class="about" id="about">
-    <p class="about-label">About Us</p>
-    <p class="about-text">
-      A <span>small german community</span> caring about
-      <span>games</span>, <span>money</span> and <span>memes</span>.
-    </p>
-  </section>
-
-  <footer>
-    <span>© 2025 Enviable</span>
-    <span>German Gaming Community</span>
-  </footer>
 
   <script>
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
     const track = document.getElementById('sliderTrack');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
