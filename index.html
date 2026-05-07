@@ -75,9 +75,14 @@
       .nav-join-mobile { display: block; }
     }
 
-    .page { display: none; min-height: 100vh; }
+    /* ── PAGES ── */
+    .page {
+      display: none;
+      min-height: 100vh;
+    }
     .page.active { display: block; }
 
+    /* ── HOME PAGE ── */
     .slider-section {
       padding-top: 70px;
       border-bottom: 1px solid rgba(245,245,245,0.06);
@@ -178,7 +183,10 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    #page-about { padding-top: 70px; }
+    /* ── ABOUT PAGE ── */
+    #page-about {
+      padding-top: 70px;
+    }
 
     .about-inner {
       min-height: calc(100vh - 70px);
@@ -283,12 +291,14 @@
   </div>
 
   <script>
+    // ── PAGE ROUTING ──
     function showPage(name) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page-' + name).classList.add('active');
       window.scrollTo(0, 0);
     }
 
+    // ── SLIDER ──
     const track = document.getElementById('sliderTrack');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
@@ -335,6 +345,39 @@
 
     prevBtn.addEventListener('click', () => goTo(current - 1));
     nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    // ── HOLD TO AUTO-SCROLL ──
+    let holdInterval = null;
+
+    function startHold(dir) {
+      holdInterval = setInterval(() => goTo(current + dir), 150);
+    }
+    function stopHold() {
+      clearInterval(holdInterval);
+      holdInterval = null;
+    }
+
+    prevBtn.addEventListener('mousedown', () => startHold(-1));
+    nextBtn.addEventListener('mousedown', () => startHold(1));
+    prevBtn.addEventListener('touchstart', e => { e.preventDefault(); startHold(-1); });
+    nextBtn.addEventListener('touchstart', e => { e.preventDefault(); startHold(1); });
+
+    document.addEventListener('mouseup', stopHold);
+    document.addEventListener('touchend', stopHold);
+
+    // ── TOUCH SWIPE ──
+    let touchStartX = 0;
+
+    track.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    track.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        goTo(current + (diff > 0 ? 1 : -1));
+      }
+    }, { passive: true });
 
     document.addEventListener('keydown', e => {
       if (e.key === 'ArrowRight') goTo(current + 1);
