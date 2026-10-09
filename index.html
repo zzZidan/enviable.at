@@ -248,7 +248,7 @@
     }
 
     /* ── GAMBLING PAGE ── */
-    #page-gambling { padding-top: 70px; }
+    #page-gambling, #page-slots, #page-roulette { padding-top: 70px; }
 
     .slot-inner {
       min-height: calc(100vh - 70px);
@@ -320,6 +320,153 @@
     .machine.armed .payline {
       background: linear-gradient(90deg, rgba(232,185,35,0.7) 0 10px, transparent 10px calc(100% - 10px), rgba(232,185,35,0.7) calc(100% - 10px));
     }
+    /* ── LOBBY ── */
+    .lobby-inner {
+      min-height: calc(100vh - 70px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 3rem 1rem; gap: 2.5rem;
+    }
+    .lobby-inner .about-label { margin-bottom: 0; }
+    .lobby-grid { display: grid; grid-template-columns: repeat(2, 260px); gap: 1.2rem; }
+    .game-tile {
+      display: flex; flex-direction: column; align-items: center; gap: 0.9rem;
+      padding: 2rem 1rem 1.6rem;
+      border: 1px solid rgba(245,245,245,0.15);
+      background: #0a0a0a;
+      color: #f5f5f5; text-decoration: none; cursor: pointer;
+      transition: border-color 0.25s, background 0.25s, transform 0.25s;
+    }
+    .game-tile:hover { border-color: rgba(245,245,245,0.6); background: #0f0f0f; transform: translateY(-3px); }
+    .tile-art { height: 90px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .tile-art-slots span {
+      width: 52px; height: 70px; display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(245,245,245,0.1); background: #050505;
+      font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem;
+    }
+    .mini-wheel {
+      width: 86px; height: 86px; border-radius: 50%;
+      background:
+        radial-gradient(circle, #1a1a1a 0 20%, #e8b923 21% 23%, transparent 24% 60%, #0a0a0a 61% 62%, transparent 63%),
+        repeating-conic-gradient(#b3261e 0 9.73deg, #121212 9.73deg 19.46deg);
+      border: 3px solid #2a2a2a;
+      box-shadow: 0 0 0 1px rgba(245,245,245,0.2);
+      transition: transform 1.2s cubic-bezier(.2,.8,.2,1);
+    }
+    .game-tile:hover .mini-wheel { transform: rotate(200deg); }
+    .tile-name { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.25em; padding-left: 0.25em; }
+    .tile-sub { font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; opacity: 0.35; }
+
+    .back-link { cursor: pointer; transition: opacity 0.2s; text-decoration: none; color: #f5f5f5; }
+    .back-link:hover { opacity: 0.7; }
+
+    /* ── ROULETTE ── */
+    .rl-inner {
+      min-height: calc(100vh - 70px);
+      max-width: 980px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2.5rem 1rem 3rem; gap: 1.8rem;
+    }
+    .rl-inner .about-label { margin-bottom: 0; align-self: flex-start; }
+    .rl-top { display: flex; align-items: center; gap: 2.5rem; }
+    .rl-wheel-wrap { width: 320px; height: 320px; }
+    #rlWheel { width: 100%; height: 100%; display: block; }
+    .rl-side { display: flex; flex-direction: column; align-items: flex-start; gap: 0.9rem; min-width: 200px; }
+    .rl-result {
+      width: 92px; height: 92px; display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(245,245,245,0.2); background: #0a0a0a;
+      font-family: 'Bebas Neue', sans-serif; font-size: 3.4rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .rl-result.red { background: #b3261e; border-color: #b3261e; }
+    .rl-result.black { background: #151515; border-color: rgba(245,245,245,0.5); }
+    .rl-result.green { background: #1f7a3a; border-color: #1f7a3a; }
+    .rl-msg { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; opacity: 0.6; min-height: 1.2em; }
+    .rl-msg.win { opacity: 1; color: #e8b923; }
+    .rl-history { display: flex; gap: 4px; flex-wrap: wrap; max-width: 220px; min-height: 22px; }
+    .rl-history span {
+      width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+      font-size: 0.55rem; font-weight: 700;
+    }
+    .rl-balance, .rl-bet { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; opacity: 0.45; }
+    .rl-balance span { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.08em; opacity: 1; color: #f5f5f5; margin-left: 0.4rem; }
+    .rl-balance { opacity: 0.8; }
+    .rl-bet span { margin-left: 0.3rem; }
+
+    .rl-board {
+      display: grid;
+      grid-template-columns: 52px repeat(12, 1fr) 52px;
+      grid-template-rows: repeat(3, 48px) 42px 42px;
+      gap: 3px; width: 100%;
+    }
+    .rl-cell {
+      grid-area: var(--d);
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Mono', monospace; font-size: 0.75rem; font-weight: 700;
+      color: #f5f5f5; cursor: pointer; user-select: none;
+      border: 1px solid rgba(245,245,245,0.08);
+      transition: filter 0.15s, outline-color 0.2s;
+      outline: 2px solid transparent; outline-offset: -2px;
+    }
+    .rl-cell:hover { filter: brightness(1.35); }
+    .rl-cell.red { background: #8f1f18; }
+    .rl-cell.black { background: #131313; }
+    .rl-cell.green { background: #17602d; }
+    .rl-cell.out { background: #0b0b0b; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 400; }
+    .rl-cell.hit { outline-color: #e8b923; animation: rlPulse 0.6s ease 3; }
+    @keyframes rlPulse { 50% { filter: brightness(1.8); } }
+    .rl-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .rl-dot.red { background: #c62f24; } .rl-dot.black { background: #1d1d1d; border: 1px solid #555; }
+    .rl-stake {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      min-width: 28px; height: 28px; padding: 0 4px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      background: #e8b923; color: #050505;
+      font-size: 0.55rem; font-weight: 700; letter-spacing: 0;
+      border: 2px dashed rgba(5,5,5,0.45);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+      pointer-events: none; z-index: 2;
+    }
+
+    .rl-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 1rem; flex-wrap: wrap; }
+    .rl-chips, .rl-actions { display: flex; gap: 0.6rem; }
+    .rl-chip {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #111; color: #f5f5f5; cursor: pointer;
+      border: 2px dashed rgba(245,245,245,0.35);
+      font-family: 'Space Mono', monospace; font-size: 0.6rem; font-weight: 700;
+      transition: transform 0.15s, border-color 0.2s, background 0.2s;
+    }
+    .rl-chip:hover { transform: translateY(-2px); }
+    .rl-chip.active { background: #e8b923; color: #050505; border-color: rgba(5,5,5,0.5); }
+    .rl-btn {
+      background: none; color: #f5f5f5; cursor: pointer;
+      border: 1px solid rgba(245,245,245,0.2);
+      padding: 0.7rem 1.1rem;
+      font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .rl-btn:hover { border-color: #f5f5f5; }
+    .rl-btn:disabled { opacity: 0.3; cursor: default; }
+    .rl-spin { border-color: #e8b923; color: #e8b923; padding: 0.7rem 2rem; }
+    .rl-spin:hover { background: rgba(232,185,35,0.1); border-color: #e8b923; }
+    .rl-refill { cursor: pointer; text-decoration: underline; color: inherit; }
+
+    @media (max-width: 760px) {
+      .lobby-grid { grid-template-columns: 1fr; width: 100%; max-width: 300px; }
+      .rl-top { flex-direction: column; gap: 1.2rem; }
+      .rl-wheel-wrap { width: 260px; height: 260px; }
+      .rl-side { align-items: center; min-width: 0; }
+      .rl-history { justify-content: center; }
+      .rl-board {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 42px repeat(12, 38px) 40px 40px 40px 40px;
+        max-width: 340px;
+      }
+      .rl-cell { grid-area: var(--m); }
+      .rl-controls { flex-direction: column; }
+    }
+
     #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 200; }
 
     .payline {
@@ -453,10 +600,34 @@
     </footer>
   </div>
 
-  <!-- GAMBLING -->
+  <!-- GAMBLING LOBBY -->
   <div class="page" id="page-gambling">
-    <div class="slot-inner">
+    <div class="lobby-inner">
       <p class="about-label">Gambling</p>
+      <div class="lobby-grid">
+        <a class="game-tile" onclick="showPage('slots')">
+          <div class="tile-art tile-art-slots"><span>7</span><span>E</span><span>&#9733;</span></div>
+          <div class="tile-name">Slots</div>
+          <div class="tile-sub">3 reels · pull the lever</div>
+        </a>
+        <a class="game-tile" onclick="showPage('roulette')">
+          <div class="tile-art"><div class="mini-wheel"></div></div>
+          <div class="tile-name">Roulette</div>
+          <div class="tile-sub">European · 0 – 36</div>
+        </a>
+      </div>
+      <p class="slot-note">Just for fun · no real money · no bets</p>
+    </div>
+    <footer>
+      <span>© 2026 Enviable</span>
+      <span>German Gaming Community</span>
+    </footer>
+  </div>
+
+  <!-- SLOTS -->
+  <div class="page" id="page-slots">
+    <div class="slot-inner">
+      <a class="about-label back-link" onclick="showPage('gambling')">Gambling / Slots</a>
       <div class="slot-row">
         <div class="machine" id="machine">
           <div class="machine-title">Enviable Slots</div>
@@ -483,13 +654,54 @@
     </footer>
   </div>
 
+  <!-- ROULETTE -->
+  <div class="page" id="page-roulette">
+    <div class="rl-inner">
+      <a class="about-label back-link" onclick="showPage('gambling')">Gambling / Roulette</a>
+      <div class="rl-top">
+        <div class="rl-wheel-wrap">
+          <canvas id="rlWheel" width="640" height="640"></canvas>
+        </div>
+        <div class="rl-side">
+          <div class="rl-result" id="rlResult"><span class="rl-num">–</span></div>
+          <div class="rl-msg" id="rlMsg">Place your chips</div>
+          <div class="rl-history" id="rlHistory"></div>
+          <div class="rl-balance">Chips <span id="rlBalance">1000</span></div>
+          <div class="rl-bet">On table <span id="rlBet">0</span></div>
+        </div>
+      </div>
+
+      <div class="rl-board" id="rlBoard"></div>
+
+      <div class="rl-controls">
+        <div class="rl-chips" id="rlChips">
+          <button class="rl-chip" data-v="10">10</button>
+          <button class="rl-chip active" data-v="50">50</button>
+          <button class="rl-chip" data-v="100">100</button>
+          <button class="rl-chip" data-v="500">500</button>
+        </div>
+        <div class="rl-actions">
+          <button class="rl-btn" id="rlUndo">Undo</button>
+          <button class="rl-btn" id="rlClear">Clear</button>
+          <button class="rl-btn rl-spin" id="rlSpin">Spin</button>
+        </div>
+      </div>
+      <p class="slot-note">Just for fun · play chips only · no real money<br><a class="rl-refill" id="rlRefill">Refill chips</a></p>
+    </div>
+    <footer>
+      <span>© 2026 Enviable</span>
+      <span>German Gaming Community</span>
+    </footer>
+  </div>
+
   <script>
     // ── PAGE ROUTING ──
     function showPage(name) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page-' + name).classList.add('active');
       window.scrollTo(0, 0);
-      if (name === 'gambling' && window.__slotDraw) window.__slotDraw();
+      if (name === 'slots' && window.__slotDraw) window.__slotDraw();
+      if (name === 'roulette' && window.__rouletteDraw) window.__rouletteDraw();
     }
 
     // ── SLIDER ──
@@ -607,6 +819,7 @@
         machine.classList.add('armed');
       });
 
+      window.__confetti = () => confetti();
       function confetti() {
         const cv = document.createElement('canvas');
         cv.id = 'confetti';
@@ -785,7 +998,7 @@
       lever.addEventListener('pointercancel', () => { dragging = false; springBack(); });
 
       document.addEventListener('keydown', e => {
-        if (e.code === 'Space' && document.getElementById('page-gambling').classList.contains('active')) {
+        if (e.code === 'Space' && document.getElementById('page-slots').classList.contains('active')) {
           e.preventDefault(); autoPull();
         }
       });
@@ -796,6 +1009,270 @@
         draw();
         if (!spinning) strips.forEach(st => { st.style.transform = `translateY(${symH() * 0.25}px)`; });
       };
+    })();
+
+    // ── ROULETTE (just for fun, play chips only) ──
+    (function () {
+      const ORDER = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
+      const REDS = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+      const colorOf = n => n === 0 ? 'green' : REDS.has(n) ? 'red' : 'black';
+      const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
+
+      // ── board ──
+      const board = document.getElementById('rlBoard');
+      const cells = []; // {el, key, nums, pay}
+      function addCell(key, label, nums, pay, cls, d, m) {
+        const el = document.createElement('div');
+        el.className = 'rl-cell ' + cls;
+        el.style.setProperty('--d', d);
+        el.style.setProperty('--m', m);
+        el.innerHTML = label;
+        el.dataset.key = key;
+        board.appendChild(el);
+        cells.push({ el, key, nums, pay });
+      }
+      addCell('n0', '0', [0], 35, 'green', '1 / 1 / 4 / 2', '1 / 1 / 2 / 4');
+      for (let n = 1; n <= 36; n++) {
+        const col = 2 + Math.floor((n - 1) / 3), row = 3 - ((n - 1) % 3);
+        const mrow = 2 + Math.floor((n - 1) / 3), mcol = ((n - 1) % 3) + 1;
+        addCell('n' + n, n, [n], 35, colorOf(n), `${row} / ${col}`, `${mrow} / ${mcol}`);
+      }
+      [3, 2, 1].forEach((c, i) => addCell('col' + c, '2:1', range(1, 36).filter(n => (n - 1) % 3 === c - 1), 2, 'out',
+        `${i + 1} / 14`, `14 / ${c}`));
+      ['1st 12', '2nd 12', '3rd 12'].forEach((l, i) => addCell('doz' + i, l, range(i * 12 + 1, i * 12 + 12), 2, 'out',
+        `4 / ${2 + i * 4} / 5 / ${6 + i * 4}`, `15 / ${i + 1}`));
+      const outs = [
+        ['low', '1–18', range(1, 18)],
+        ['even', 'Even', range(1, 36).filter(n => n % 2 === 0)],
+        ['red', '<span class="rl-dot red"></span>', range(1, 36).filter(n => REDS.has(n))],
+        ['black', '<span class="rl-dot black"></span>', range(1, 36).filter(n => !REDS.has(n))],
+        ['odd', 'Odd', range(1, 36).filter(n => n % 2 === 1)],
+        ['high', '19–36', range(19, 36)],
+      ];
+      outs.forEach(([k, l, nums], i) => addCell(k, l, nums, 1, 'out',
+        `5 / ${2 + i * 2} / 6 / ${4 + i * 2}`, `${16 + Math.floor(i / 3)} / ${(i % 3) + 1}`));
+
+      // ── state ──
+      const LS = 'enviable-roulette-chips';
+      let balance = 1000;
+      try { const v = parseInt(localStorage.getItem(LS), 10); if (!isNaN(v)) balance = v; } catch (e) {}
+      const save = () => { try { localStorage.setItem(LS, balance); } catch (e) {} };
+      let chip = 50;
+      let bets = {};      // key -> amount
+      let log = [];       // [key, amount] for undo
+      let lastBets = null;
+      let spinning = false;
+
+      const $ = id => document.getElementById(id);
+      const balEl = $('rlBalance'), betEl = $('rlBet'), msgEl = $('rlMsg'), resEl = $('rlResult'), histEl = $('rlHistory');
+      const total = () => Object.values(bets).reduce((a, b) => a + b, 0);
+
+      function render() {
+        balEl.textContent = balance;
+        betEl.textContent = total();
+        cells.forEach(c => {
+          let st = c.el.querySelector('.rl-stake');
+          const a = bets[c.key];
+          if (a) {
+            if (!st) { st = document.createElement('span'); st.className = 'rl-stake'; c.el.appendChild(st); }
+            st.textContent = a >= 1000 ? (a / 1000).toFixed(a % 1000 ? 1 : 0) + 'k' : a;
+          } else if (st) st.remove();
+        });
+        $('rlSpin').disabled = spinning || (total() === 0 && !lastBets);
+        $('rlSpin').textContent = total() === 0 && lastBets && !spinning ? 'Rebet & Spin' : 'Spin';
+        $('rlUndo').disabled = $('rlClear').disabled = spinning || !log.length;
+      }
+
+      board.addEventListener('click', e => {
+        const el = e.target.closest('.rl-cell');
+        if (!el || spinning) return;
+        if (balance < chip) { msgEl.className = 'rl-msg'; msgEl.textContent = 'Not enough chips'; return; }
+        cells.forEach(c => c.el.classList.remove('hit'));
+        balance -= chip;
+        bets[el.dataset.key] = (bets[el.dataset.key] || 0) + chip;
+        log.push([el.dataset.key, chip]);
+        msgEl.className = 'rl-msg'; msgEl.textContent = 'Place your chips';
+        render();
+      });
+      $('rlChips').addEventListener('click', e => {
+        const b = e.target.closest('.rl-chip'); if (!b) return;
+        document.querySelectorAll('.rl-chip').forEach(x => x.classList.toggle('active', x === b));
+        chip = +b.dataset.v;
+      });
+      $('rlUndo').addEventListener('click', () => {
+        const l = log.pop(); if (!l) return;
+        bets[l[0]] -= l[1]; if (!bets[l[0]]) delete bets[l[0]];
+        balance += l[1]; render();
+      });
+      $('rlClear').addEventListener('click', () => {
+        balance += total(); bets = {}; log = []; render();
+      });
+      $('rlRefill').addEventListener('click', () => {
+        if (spinning) return;
+        bets = {}; log = []; balance = 1000; save();
+        msgEl.className = 'rl-msg'; msgEl.textContent = 'Chips refilled';
+        render();
+      });
+
+      // ── wheel drawing ──
+      const cv = $('rlWheel'), ctx = cv.getContext('2d');
+      const S = cv.width, C = S / 2;
+      const R = S / 2 - 8;            // outer
+      const POCKET_OUT = R * 0.80, POCKET_IN = R * 0.58;
+      const TRACK = R * 0.88, BALL_POCKET = R * 0.69;
+      const SEG = 2 * Math.PI / 37;
+      let wheelA = 0, ballA = 0, ballR = BALL_POCKET, ballOn = false, ballN = null;
+
+      function drawWheel() {
+        ctx.clearRect(0, 0, S, S);
+        // rim
+        ctx.beginPath(); ctx.arc(C, C, R, 0, 2 * Math.PI);
+        const rim = ctx.createRadialGradient(C, C, R * 0.8, C, C, R);
+        rim.addColorStop(0, '#1b1b1b'); rim.addColorStop(1, '#2d2d2d');
+        ctx.fillStyle = rim; ctx.fill();
+        ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(232,185,35,0.6)'; ctx.stroke();
+        // ball track
+        ctx.beginPath(); ctx.arc(C, C, R * 0.83, 0, 2 * Math.PI);
+        ctx.strokeStyle = 'rgba(245,245,245,0.08)'; ctx.lineWidth = 1; ctx.stroke();
+
+        ctx.save(); ctx.translate(C, C); ctx.rotate(wheelA);
+        for (let i = 0; i < 37; i++) {
+          const a0 = -Math.PI / 2 + i * SEG - SEG / 2, a1 = a0 + SEG;
+          const n = ORDER[i];
+          ctx.beginPath(); ctx.arc(0, 0, POCKET_OUT, a0, a1); ctx.arc(0, 0, POCKET_IN, a1, a0, true); ctx.closePath();
+          ctx.fillStyle = n === 0 ? '#1f7a3a' : REDS.has(n) ? '#b3261e' : '#121212'; ctx.fill();
+          ctx.strokeStyle = 'rgba(232,185,35,0.55)'; ctx.lineWidth = 1.5; ctx.stroke();
+          // number
+          ctx.save();
+          ctx.rotate(a0 + SEG / 2 + Math.PI / 2);
+          ctx.fillStyle = '#f5f5f5';
+          ctx.font = `700 ${Math.round(S * 0.034)}px "Space Mono", monospace`;
+          ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText(n, 0, -(POCKET_OUT - (POCKET_OUT - POCKET_IN) * 0.28));
+          ctx.restore();
+        }
+        // pocket separators for the ball area
+        // inner cone
+        const cone = ctx.createRadialGradient(0, 0, 0, 0, 0, POCKET_IN);
+        cone.addColorStop(0, '#3a3a3a'); cone.addColorStop(0.7, '#161616'); cone.addColorStop(1, '#0c0c0c');
+        ctx.beginPath(); ctx.arc(0, 0, POCKET_IN, 0, 2 * Math.PI); ctx.fillStyle = cone; ctx.fill();
+        ctx.strokeStyle = 'rgba(232,185,35,0.6)'; ctx.lineWidth = 2; ctx.stroke();
+        // turret
+        for (let k = 0; k < 4; k++) {
+          ctx.save(); ctx.rotate(k * Math.PI / 2);
+          ctx.fillStyle = '#c9a227';
+          ctx.fillRect(-3, -POCKET_IN * 0.55, 6, POCKET_IN * 0.55);
+          ctx.restore();
+        }
+        ctx.beginPath(); ctx.arc(0, 0, POCKET_IN * 0.16, 0, 2 * Math.PI);
+        const tg = ctx.createRadialGradient(-4, -4, 1, 0, 0, POCKET_IN * 0.16);
+        tg.addColorStop(0, '#fff3c4'); tg.addColorStop(1, '#a8841c');
+        ctx.fillStyle = tg; ctx.fill();
+        ctx.restore();
+
+        // ball
+        if (ballOn) {
+          const bx = C + Math.cos(ballA - Math.PI / 2) * ballR, by = C + Math.sin(ballA - Math.PI / 2) * ballR;
+          const br = S * 0.018;
+          const bg = ctx.createRadialGradient(bx - br / 3, by - br / 3, 1, bx, by, br);
+          bg.addColorStop(0, '#ffffff'); bg.addColorStop(1, '#9a9a9a');
+          ctx.beginPath(); ctx.arc(bx, by, br, 0, 2 * Math.PI);
+          ctx.shadowColor = 'rgba(0,0,0,0.6)'; ctx.shadowBlur = 6;
+          ctx.fillStyle = bg; ctx.fill(); ctx.shadowBlur = 0;
+        }
+      }
+
+      // idle rotation loop
+      const IDLE = 0.0025; // rad per frame-ish (scaled by dt)
+      let last = performance.now(), anim = null;
+      function loop(t) {
+        const dt = Math.min(50, t - last) / 16.67; last = t;
+        if (!anim) {
+          wheelA += IDLE * dt;
+          if (ballOn && ballN !== null) ballA = wheelA + ORDER.indexOf(ballN) * SEG;
+        } else anim(t);
+        if (document.getElementById('page-roulette').classList.contains('active')) drawWheel();
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+      window.__rouletteDraw = drawWheel;
+
+      const easeOut = k => 1 - Math.pow(1 - k, 3);
+      const easeOutQuint = k => 1 - Math.pow(1 - k, 5);
+
+      function spin() {
+        if (spinning) return;
+        if (total() === 0) {
+          if (!lastBets) return;
+          const need = Object.values(lastBets).reduce((a, b) => a + b, 0);
+          if (need > balance) { msgEl.className = 'rl-msg'; msgEl.textContent = 'Not enough chips'; return; }
+          bets = { ...lastBets }; balance -= need;
+          log = Object.entries(bets);
+        }
+        lastBets = { ...bets };
+        spinning = true;
+        cells.forEach(c => c.el.classList.remove('hit'));
+        msgEl.className = 'rl-msg'; msgEl.textContent = 'No more bets';
+        render();
+        const wr = cv.getBoundingClientRect();
+        if (wr.top < 70 || wr.bottom > innerHeight) cv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        const win = ORDER[Math.floor(Math.random() * 37)];
+        const D = 6200;
+        const t0 = performance.now();
+        const w0 = wheelA, extraW = Math.PI * 2 * 1.5;
+        const wEnd = w0 + IDLE * (D / 16.67) + extraW;
+        const target = wEnd + ORDER.indexOf(win) * SEG;
+        const b0 = ballOn ? ballA : wheelA;
+        let bEnd = target;
+        while (bEnd > b0 - Math.PI * 2 * 5) bEnd -= Math.PI * 2;
+        ballOn = true; ballN = null;
+
+        anim = t => {
+          const k = Math.min(1, (t - t0) / D);
+          wheelA = w0 + IDLE * ((t - t0) / 16.67) + extraW * easeOut(k);
+          ballA = b0 + (bEnd - b0) * easeOutQuint(k);
+          if (k < 0.55) ballR = TRACK;
+          else {
+            const q = (k - 0.55) / 0.45;
+            const bounce = Math.sin(q * Math.PI * 5) * (1 - q) * R * 0.035;
+            ballR = TRACK + (BALL_POCKET - TRACK) * easeOut(Math.min(1, q * 1.4)) + Math.abs(bounce);
+          }
+          if (k >= 1) { anim = null; ballN = win; ballR = BALL_POCKET; settle(win); }
+        };
+      }
+
+      function settle(n) {
+        const col = colorOf(n);
+        resEl.className = 'rl-result ' + col;
+        resEl.innerHTML = `<span class="rl-num">${n}</span>`;
+        let ret = 0;
+        cells.forEach(c => {
+          if (c.nums.includes(n)) {
+            c.el.classList.add('hit');
+            if (bets[c.key]) ret += bets[c.key] * (c.pay + 1);
+          }
+        });
+        const staked = total();
+        balance += ret;
+        const net = ret - staked;
+        msgEl.className = 'rl-msg' + (net > 0 ? ' win' : '');
+        msgEl.textContent = `${n} ${col}` + (staked ? (net > 0 ? ` · +${net}` : net === 0 ? ' · even' : ` · ${net}`) : '');
+        if (n === 0 && net > 0 && typeof window.__confetti === 'function') window.__confetti();
+        const h = document.createElement('span');
+        h.textContent = n;
+        h.style.background = col === 'red' ? '#b3261e' : col === 'green' ? '#1f7a3a' : '#151515';
+        if (col === 'black') h.style.border = '1px solid #444';
+        histEl.prepend(h);
+        while (histEl.children.length > 12) histEl.lastChild.remove();
+        bets = {}; log = [];
+        spinning = false;
+        if (balance <= 0) msgEl.textContent += ' · Out of chips — refill below';
+        save(); render();
+      }
+
+      $('rlSpin').addEventListener('click', spin);
+      render();
     })();
   </script>
 
