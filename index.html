@@ -391,6 +391,7 @@
     .rl-balance span { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.08em; opacity: 1; color: #f5f5f5; margin-left: 0.4rem; }
     .rl-balance { opacity: 0.8; }
     .rl-bet span { margin-left: 0.3rem; }
+    .rl-bet.armed { color: #e8b923; }
 
     .rl-board {
       display: grid;
@@ -689,7 +690,7 @@
       <p class="slot-note">Just for fun · play chips only · no real money<br><a class="rl-refill" id="rlRefill">Refill chips</a></p>
     </div>
     <footer>
-      <span>© 2026 Enviable</span>
+      <span>© 2026 <span id="luckyRl">Enviable</span></span>
       <span>German Gaming Community</span>
     </footer>
   </div>
@@ -1062,8 +1063,16 @@
       let log = [];       // [key, amount] for undo
       let lastBets = null;
       let spinning = false;
+      let rigged = false;
 
       const $ = id => document.getElementById(id);
+
+      // shh. clicking the footer "Enviable" on this page makes the next spin land on your chips
+      $('luckyRl').addEventListener('click', () => {
+        if (spinning) return;
+        rigged = true;
+        document.querySelector('.rl-bet').classList.add('armed');
+      });
       const balEl = $('rlBalance'), betEl = $('rlBet'), msgEl = $('rlMsg'), resEl = $('rlResult'), histEl = $('rlHistory');
       const total = () => Object.values(bets).reduce((a, b) => a + b, 0);
 
@@ -1217,7 +1226,18 @@
         const wr = cv.getBoundingClientRect();
         if (wr.top < 70 || wr.bottom > innerHeight) cv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        const win = ORDER[Math.floor(Math.random() * 37)];
+        let win = ORDER[Math.floor(Math.random() * 37)];
+        if (rigged) {
+          // land on the number that pays the most for the chips on the table
+          let best = -1, picks = [];
+          for (let n = 0; n <= 36; n++) {
+            const r = cells.reduce((a, c) => a + (bets[c.key] && c.nums.includes(n) ? bets[c.key] * (c.pay + 1) : 0), 0);
+            if (r > best) { best = r; picks = [n]; } else if (r === best) picks.push(n);
+          }
+          win = picks[Math.floor(Math.random() * picks.length)];
+          rigged = false;
+          document.querySelector('.rl-bet').classList.remove('armed');
+        }
         const D = 6200;
         const t0 = performance.now();
         const w0 = wheelA, extraW = Math.PI * 2 * 1.5;
