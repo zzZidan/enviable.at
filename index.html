@@ -74,9 +74,12 @@
       padding: 0.35rem 0.9rem;
     }
 
+    .nav-mobile { display: none; gap: 0.6rem; }
+
     @media (max-width: 640px) {
       .nav-links { display: none; }
-      .nav-join-mobile { display: block; }
+      .nav-mobile { display: flex; }
+      .nav-join-mobile { display: block; cursor: pointer; }
     }
 
     /* ── PAGES ── */
@@ -253,7 +256,10 @@
       <li><a onclick="showPage('about')" class="join">About Us</a></li>
       <li><a href="https://discord.gg/enviable" target="_blank" class="join">Join</a></li>
     </ul>
-    <a href="https://discord.gg/enviable" target="_blank" class="nav-join-mobile">Join</a>
+    <div class="nav-mobile">
+      <a onclick="showPage('about')" class="nav-join-mobile">About Us</a>
+      <a href="https://discord.gg/enviable" target="_blank" class="nav-join-mobile">Join</a>
+    </div>
   </nav>
 
   <!-- HOME -->
