@@ -667,7 +667,14 @@
         machine.classList.remove('win', 'jackpot');
         msg.textContent = 'Rolling...';
         const h = symH();
-        const result = rigged ? strips.map(() => SYMBOLS[0]) : strips.map(() => pick());
+        const JACKPOT_ODDS = 500; // real jackpot chance: 1 in 500
+        let result;
+        if (rigged || Math.random() < 1 / JACKPOT_ODDS) {
+          result = strips.map(() => SYMBOLS[0]);
+        } else {
+          do { result = strips.map(() => pick()); }
+          while (result.every(r => r.id === 'case'));
+        }
         rigged = false;
         machine.classList.remove('armed');
         let done = 0;
