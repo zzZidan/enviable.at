@@ -317,6 +317,11 @@
     }
     .sym img { width: 85%; height: 85%; object-fit: contain; pointer-events: none; }
 
+    .machine.armed .payline {
+      background: linear-gradient(90deg, rgba(232,185,35,0.7) 0 10px, transparent 10px calc(100% - 10px), rgba(232,185,35,0.7) calc(100% - 10px));
+    }
+    #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 200; }
+
     .payline {
       position: absolute; left: -6px; right: -6px; top: 50%;
       height: 1px;
@@ -429,7 +434,7 @@
       <h1>ENVIABLE</h1>
     </div>
     <footer>
-      <span>© 2025 Enviable</span>
+      <span>© 2026 Enviable</span>
       <span>German Gaming Community</span>
     </footer>
   </div>
@@ -443,7 +448,7 @@
       </p>
     </div>
     <footer>
-      <span>© 2025 Enviable</span>
+      <span>© 2026 Enviable</span>
       <span>German Gaming Community</span>
     </footer>
   </div>
@@ -473,7 +478,7 @@
       <p class="slot-note">Just for fun · no real money · no bets</p>
     </div>
     <footer>
-      <span>© 2025 Enviable</span>
+      <span>© 2026 <span id="lucky">Enviable</span></span>
       <span>German Gaming Community</span>
     </footer>
   </div>
@@ -593,6 +598,58 @@
       const stats = { spins: 0, wins: 0, jackpots: 0 };
       let current = strips.map(() => pick());
       let spinning = false;
+      let rigged = false;
+
+      // shh. clicking the footer "Enviable" on this page rigs the next spin
+      document.getElementById('lucky').addEventListener('click', () => {
+        if (spinning) return;
+        rigged = true;
+        machine.classList.add('armed');
+      });
+
+      function confetti() {
+        const cv = document.createElement('canvas');
+        cv.id = 'confetti';
+        document.body.appendChild(cv);
+        const ctx = cv.getContext('2d');
+        const W = cv.width = innerWidth, H = cv.height = innerHeight;
+        const colors = ['#e8b923', '#f5d76e', '#f5f5f5', '#d63a1e', '#ff8c2a'];
+        const parts = [];
+        const burst = (side, n) => {
+          for (let i = 0; i < n; i++) {
+            const dir = side === 'left' ? 1 : -1;
+            const ang = (Math.random() * 40 + 35) * Math.PI / 180;
+            const sp = Math.random() * 14 + 12;
+            parts.push({
+              x: side === 'left' ? -10 : W + 10,
+              y: H * (0.55 + Math.random() * 0.35),
+              vx: Math.cos(ang) * sp * dir,
+              vy: -Math.sin(ang) * sp,
+              w: Math.random() * 8 + 5, h: Math.random() * 5 + 3,
+              r: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.4,
+              c: colors[Math.floor(Math.random() * colors.length)],
+              life: 0
+            });
+          }
+        };
+        burst('left', 90); burst('right', 90);
+        setTimeout(() => { burst('left', 60); burst('right', 60); }, 350);
+        const t0 = performance.now();
+        (function frame(t) {
+          ctx.clearRect(0, 0, W, H);
+          for (const p of parts) {
+            p.vy += 0.32; p.vx *= 0.99; p.vy *= 0.99;
+            p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life++;
+            ctx.save();
+            ctx.translate(p.x, p.y); ctx.rotate(p.r);
+            ctx.globalAlpha = Math.max(0, 1 - (t - t0) / 4200);
+            ctx.fillStyle = p.c;
+            ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.r * 2)));
+            ctx.restore();
+          }
+          if (t - t0 < 4200) requestAnimationFrame(frame); else cv.remove();
+        })(t0);
+      }
 
       const symEl = s => `<div class="sym">${s.html}</div>`;
       const symH = () => machine.querySelector('.reel').offsetHeight / 1.5;
@@ -610,7 +667,9 @@
         machine.classList.remove('win', 'jackpot');
         msg.textContent = 'Rolling...';
         const h = symH();
-        const result = strips.map(() => pick());
+        const result = rigged ? strips.map(() => SYMBOLS[0]) : strips.map(() => pick());
+        rigged = false;
+        machine.classList.remove('armed');
         let done = 0;
 
         strips.forEach((st, i) => {
@@ -644,6 +703,7 @@
         if (same3 && ids[0] === 'case') {
           stats.jackpots++; stats.wins++;
           machine.classList.add('jackpot');
+          confetti();
           msg.textContent = 'GOLD CASE JACKPOT';
         } else if (same3) {
           stats.wins++;
