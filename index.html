@@ -339,10 +339,11 @@
     .game-tile:hover { border-color: rgba(245,245,245,0.6); background: #0f0f0f; transform: translateY(-3px); }
     .tile-art { height: 90px; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .tile-art-slots span {
-      width: 52px; height: 70px; display: flex; align-items: center; justify-content: center;
+      width: 66px; height: 70px; display: flex; align-items: center; justify-content: center;
       border: 1px solid rgba(245,245,245,0.1); background: #050505;
       font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem;
     }
+    .tile-art-slots img { width: 90%; height: 90%; object-fit: contain; }
     .mini-wheel {
       width: 86px; height: 86px; border-radius: 50%;
       background:
@@ -552,14 +553,14 @@
   <nav>
     <a class="nav-logo" onclick="showPage('home')">Enviable</a>
     <ul class="nav-links">
-      <li><a onclick="showPage('about')" class="join">About Us</a></li>
-      <li><a onclick="showPage('gambling')" class="join">Gambling</a></li>
       <li><a href="https://discord.gg/enviable" target="_blank" class="join">Join</a></li>
+      <li><a onclick="showPage('gambling')" class="join">Gambling</a></li>
+      <li><a onclick="showPage('about')" class="join">About Us</a></li>
     </ul>
     <div class="nav-mobile">
-      <a onclick="showPage('about')" class="nav-join-mobile">About Us</a>
-      <a onclick="showPage('gambling')" class="nav-join-mobile">Gambling</a>
       <a href="https://discord.gg/enviable" target="_blank" class="nav-join-mobile">Join</a>
+      <a onclick="showPage('gambling')" class="nav-join-mobile">Gambling</a>
+      <a onclick="showPage('about')" class="nav-join-mobile">About Us</a>
     </div>
   </nav>
 
@@ -607,7 +608,7 @@
       <p class="about-label">Gambling</p>
       <div class="lobby-grid">
         <a class="game-tile" onclick="showPage('slots')">
-          <div class="tile-art tile-art-slots"><span>7</span><span>E</span><span>&#9733;</span></div>
+          <div class="tile-art tile-art-slots"><span><img src="case-emblem.png" alt=""></span><span><img src="case-emblem.png" alt=""></span><span><img src="case-emblem.png" alt=""></span></div>
           <div class="tile-name">Slots</div>
           <div class="tile-sub">3 reels · pull the lever</div>
         </a>
