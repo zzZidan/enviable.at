@@ -343,7 +343,13 @@
       border: 1px solid rgba(245,245,245,0.1); background: #050505;
       font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem;
     }
+    .tile-art-slots span { overflow: hidden; align-items: flex-start; }
+    .mini-strip { display: block; font-style: normal; }
+    .mini-strip div { height: 70px; width: 64px; display: flex; align-items: center; justify-content: center; }
     .tile-art-slots img { width: 90%; height: 90%; object-fit: contain; }
+    .game-tile:hover .mini-strip { transform: translateY(-350px); transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.25, 1.06); }
+    .game-tile:hover .tile-art-slots span:nth-child(2) .mini-strip { transition-duration: 1.15s; }
+    .game-tile:hover .tile-art-slots span:nth-child(3) .mini-strip { transition-duration: 1.4s; }
     .mini-wheel {
       width: 86px; height: 86px; border-radius: 50%;
       background:
@@ -608,7 +614,7 @@
       <p class="about-label">Gambling</p>
       <div class="lobby-grid">
         <a class="game-tile" onclick="showPage('slots')">
-          <div class="tile-art tile-art-slots"><span><img src="case-emblem.png" alt=""></span><span><img src="case-emblem.png" alt=""></span><span><img src="case-emblem.png" alt=""></span></div>
+          <div class="tile-art tile-art-slots"><span><i class="mini-strip"><div><img src="case-emblem.png" alt=""></div><div>7</div><div>E</div><div>&#9733;</div><div>&#9824;</div><div><img src="case-emblem.png" alt=""></div></i></span><span><i class="mini-strip"><div><img src="case-emblem.png" alt=""></div><div>7</div><div>E</div><div>&#9733;</div><div>&#9824;</div><div><img src="case-emblem.png" alt=""></div></i></span><span><i class="mini-strip"><div><img src="case-emblem.png" alt=""></div><div>7</div><div>E</div><div>&#9733;</div><div>&#9824;</div><div><img src="case-emblem.png" alt=""></div></i></span></div>
           <div class="tile-name">Slots</div>
           <div class="tile-sub">3 reels · pull the lever</div>
         </a>
