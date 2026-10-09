@@ -344,10 +344,10 @@
       font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem;
     }
     .tile-art-slots span { overflow: hidden; align-items: flex-start; }
-    .mini-strip { display: block; font-style: normal; }
+    .mini-strip { display: block; font-style: normal; transform: translateY(-350px); }
     .mini-strip div { height: 70px; width: 64px; display: flex; align-items: center; justify-content: center; }
     .tile-art-slots img { width: 90%; height: 90%; object-fit: contain; }
-    .game-tile:hover .mini-strip { transform: translateY(-350px); transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.25, 1.06); }
+    .game-tile:hover .mini-strip { transform: translateY(0); transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.25, 1.06); }
     .game-tile:hover .tile-art-slots span:nth-child(2) .mini-strip { transition-duration: 1.15s; }
     .game-tile:hover .tile-art-slots span:nth-child(3) .mini-strip { transition-duration: 1.4s; }
     .mini-wheel {
