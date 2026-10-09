@@ -756,7 +756,7 @@
       for (let i = 1; i <= TOTAL; i++) {
         const card = document.createElement('div');
         card.className = 'slide-card';
-        card.innerHTML = i === 9
+        card.innerHTML = (i === 9 || i === 22)
           ? `<img class="ponke" src="ponke.png" alt="PONKE">`
           : `<span class="slide-text">Blueiron</span>`;
         if (pass) card.setAttribute('aria-hidden', 'true');
