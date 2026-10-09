@@ -99,14 +99,17 @@
 
     .slider-track {
       display: flex;
-      gap: 8px;
-      padding: 0 8px;
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      width: max-content;
+      padding: 8px 0;
+      animation: marquee 90s linear infinite;
       will-change: transform;
     }
+    .slider-wrapper:hover .slider-track { animation-play-state: paused; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
     .slide-card {
-      min-width: calc((100vw - 5 * 8px - 8px) / 5);
+      width: calc((100vw - 6 * 8px) / 5);
+      margin-left: 8px;
       height: 80px;
       background: #0d0d0d;
       display: flex;
@@ -134,55 +137,69 @@
       padding: 6px;
     }
 
-    .slider-controls {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.6rem 1rem;
-      background: #050505;
-      border-top: 1px solid rgba(245,245,245,0.05);
-    }
-
-    .ctrl-left { display: flex; align-items: center; gap: 0.8rem; }
-
-    .slider-btn {
-      background: none;
-      border: 1px solid rgba(245,245,245,0.12);
-      color: #f5f5f5;
-      width: 26px; height: 26px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color 0.2s, background 0.2s;
-      font-size: 0.7rem;
-    }
-    .slider-btn:hover { border-color: rgba(245,245,245,0.4); background: rgba(245,245,245,0.04); }
-
-    .slider-progress { font-size: 0.45rem; letter-spacing: 0.15em; opacity: 0.2; }
-
-    .slider-dots { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; max-width: 50%; }
-    .dot {
-      width: 12px; height: 1px;
-      background: rgba(245,245,245,0.2);
-      transition: background 0.3s, width 0.3s;
-      cursor: pointer;
-    }
-    .dot.active { background: #f5f5f5; width: 20px; }
-
     .hero {
-      height: calc(100vh - 150px);
+      min-height: calc(100vh - 167px);
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      gap: 1.6rem;
+      padding: 2rem 1rem;
     }
 
     .hero h1 {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(5rem, 20vw, 18rem);
-      color: #f5f5f5;
+      line-height: 0.9;
       letter-spacing: 0.05em;
-      animation: fadeIn 1.5s ease both;
+      color: #f5f5f5;
+      background: linear-gradient(110deg, #f5f5f5 0%, #f5f5f5 45%, #f3d27a 48%, #fff6d8 50%, #e8b923 52%, #f5f5f5 55%, #f5f5f5 100%);
+      background-size: 300% 100%;
+      background-position: 100% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeIn 1.5s ease both, sheen 8s ease-in-out 1.8s infinite;
+    }
+
+    @keyframes sheen {
+      0%   { background-position: 100% 0; }
+      35%  { background-position: 0% 0; }
+      100% { background-position: 0% 0; }
+    }
+
+    .hero-discord {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+      opacity: 0; transition: opacity 0.8s;
+    }
+    .hero-discord.ready { opacity: 0.7; }
+    .hero-discord b { font-weight: 700; color: #f5f5f5; }
+    .hero-discord .sep { opacity: 0.35; }
+    .live-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #3ba55d;
+      box-shadow: 0 0 0 0 rgba(59,165,93,0.6);
+      animation: livePulse 2s ease-out infinite;
+    }
+    @keyframes livePulse {
+      0%   { box-shadow: 0 0 0 0 rgba(59,165,93,0.6); }
+      70%  { box-shadow: 0 0 0 8px rgba(59,165,93,0); }
+      100% { box-shadow: 0 0 0 0 rgba(59,165,93,0); }
+    }
+    .hero-join {
+      color: #f5f5f5; text-decoration: none;
+      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+      border: 1px solid rgba(245,245,245,0.3);
+      padding: 0.9rem 2.2rem;
+      transition: border-color 0.25s, background 0.25s;
+      animation: fadeIn 1.5s ease 0.4s both;
+    }
+    .hero-join:hover { border-color: #f5f5f5; background: rgba(245,245,245,0.05); }
+
+    @media (max-width: 640px) {
+      .slide-card { width: calc((100vw - 4 * 8px) / 3); }
+      .slider-track { animation-duration: 60s; }
     }
 
     @keyframes fadeIn {
@@ -584,17 +601,16 @@
       <div class="slider-wrapper">
         <div class="slider-track" id="sliderTrack"></div>
       </div>
-      <div class="slider-controls">
-        <div class="ctrl-left">
-          <button class="slider-btn" id="prevBtn">&#8592;</button>
-          <button class="slider-btn" id="nextBtn">&#8594;</button>
-          <span class="slider-progress" id="progressText">01 / 25</span>
-        </div>
-        <div class="slider-dots" id="dotsContainer"></div>
-      </div>
     </div>
     <div class="hero">
       <h1>ENVIABLE</h1>
+      <div class="hero-discord" id="heroDiscord">
+        <span class="live-dot"></span>
+        <span><b id="dcOnline">–</b> online</span>
+        <span class="sep">·</span>
+        <span><b id="dcMembers">–</b> members</span>
+      </div>
+      <a class="hero-join" href="https://discord.gg/enviable" target="_blank">Join the Discord</a>
     </div>
     <footer>
       <span>© 2026 Enviable</span>
@@ -732,91 +748,35 @@
       if (name === 'roulette' && window.__rouletteDraw) window.__rouletteDraw();
     }
 
-    // ── SLIDER ──
+    // ── SLIDER (endless band) ──
     const track = document.getElementById('sliderTrack');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const progressText = document.getElementById('progressText');
-    const dotsContainer = document.getElementById('dotsContainer');
-
     const TOTAL = 25;
-    const GAP = 8;
-    let current = 0;
-
-    for (let i = 1; i <= TOTAL; i++) {
-      const card = document.createElement('div');
-      card.className = 'slide-card';
-      if (i === 22) {
-        card.innerHTML = `<img src="case-emblem.png" alt="Gold Case">`;
-      } else {
-        card.innerHTML = `<span class="slide-text">Blueiron</span>`;
+    for (let pass = 0; pass < 2; pass++) {
+      for (let i = 1; i <= TOTAL; i++) {
+        const card = document.createElement('div');
+        card.className = 'slide-card';
+        card.innerHTML = i === 22
+          ? `<img src="case-emblem.png" alt="Gold Case">`
+          : `<span class="slide-text">Blueiron</span>`;
+        if (pass) card.setAttribute('aria-hidden', 'true');
+        track.appendChild(card);
       }
-      track.appendChild(card);
     }
 
-    for (let i = 0; i < TOTAL; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'dot' + (i === 0 ? ' active' : '');
-      dot.addEventListener('click', () => goTo(i));
-      dotsContainer.appendChild(dot);
+    // ── LIVE DISCORD COUNT ──
+    async function loadDiscord() {
+      try {
+        const r = await fetch('https://discord.com/api/v10/invites/enviable?with_counts=true');
+        if (!r.ok) throw 0;
+        const d = await r.json();
+        if (typeof d.approximate_presence_count !== 'number') throw 0;
+        document.getElementById('dcOnline').textContent = d.approximate_presence_count;
+        document.getElementById('dcMembers').textContent = d.approximate_member_count;
+        document.getElementById('heroDiscord').classList.add('ready');
+      } catch (e) { /* counter just stays hidden */ }
     }
-
-    function getCardWidth() {
-      const card = track.querySelector('.slide-card');
-      return card ? card.offsetWidth + GAP : 0;
-    }
-
-    function goTo(index) {
-      if (index >= TOTAL) index = 0;
-      if (index < 0) index = TOTAL - 1;
-      current = index;
-      track.style.transform = `translateX(-${current * getCardWidth()}px)`;
-      progressText.textContent = `${String(current + 1).padStart(2,'0')} / ${TOTAL}`;
-      document.querySelectorAll('.dot').forEach((d, i) => {
-        d.classList.toggle('active', i === current);
-      });
-    }
-
-    prevBtn.addEventListener('click', () => goTo(current - 1));
-    nextBtn.addEventListener('click', () => goTo(current + 1));
-
-    // ── HOLD TO AUTO-SCROLL ──
-    let holdInterval = null;
-
-    function startHold(dir) {
-      holdInterval = setInterval(() => goTo(current + dir), 150);
-    }
-    function stopHold() {
-      clearInterval(holdInterval);
-      holdInterval = null;
-    }
-
-    prevBtn.addEventListener('mousedown', () => startHold(-1));
-    nextBtn.addEventListener('mousedown', () => startHold(1));
-    prevBtn.addEventListener('touchstart', e => { e.preventDefault(); startHold(-1); });
-    nextBtn.addEventListener('touchstart', e => { e.preventDefault(); startHold(1); });
-
-    document.addEventListener('mouseup', stopHold);
-    document.addEventListener('touchend', stopHold);
-
-    // ── TOUCH SWIPE ──
-    let touchStartX = 0;
-
-    track.addEventListener('touchstart', e => {
-      touchStartX = e.touches[0].clientX;
-    }, { passive: true });
-
-    track.addEventListener('touchend', e => {
-      const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) {
-        goTo(current + (diff > 0 ? 1 : -1));
-      }
-    }, { passive: true });
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') goTo(current + 1);
-      if (e.key === 'ArrowLeft') goTo(current - 1);
-    });
+    loadDiscord();
+    setInterval(loadDiscord, 60000);
 
     // ── SLOT MACHINE (just for fun, no money) ──
     (function () {
