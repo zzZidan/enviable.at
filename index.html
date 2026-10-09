@@ -246,6 +246,152 @@
       text-transform: uppercase;
       opacity: 0.15;
     }
+
+    /* ── GAMBLING PAGE ── */
+    #page-gambling { padding-top: 70px; }
+
+    .slot-inner {
+      min-height: calc(100vh - 70px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+      gap: 2rem;
+    }
+
+    .slot-inner .about-label { margin-bottom: 0; }
+
+    .slot-row { display: flex; align-items: center; gap: 1.2rem; }
+
+    .machine {
+      --sym: 110px;
+      --reel-w: 120px;
+      border: 1px solid rgba(245,245,245,0.2);
+      background: #0a0a0a;
+      padding: 1.2rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .machine.win { border-color: #f5f5f5; box-shadow: 0 0 40px rgba(245,245,245,0.15); }
+    .machine.jackpot { border-color: #e8b923; box-shadow: 0 0 60px rgba(232,185,35,0.35); }
+
+    .machine-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.4em;
+      text-align: center;
+      margin-bottom: 1rem;
+      padding-left: 0.4em;
+    }
+
+    .reels { display: flex; gap: 8px; position: relative; }
+
+    .reel {
+      width: var(--reel-w);
+      height: calc(var(--sym) * 1.5);
+      overflow: hidden;
+      background: #050505;
+      border: 1px solid rgba(245,245,245,0.08);
+      position: relative;
+    }
+    .reel::before, .reel::after {
+      content: '';
+      position: absolute; left: 0; right: 0;
+      height: calc(var(--sym) * 0.35);
+      z-index: 2; pointer-events: none;
+    }
+    .reel::before { top: 0; background: linear-gradient(#050505, transparent); }
+    .reel::after { bottom: 0; background: linear-gradient(transparent, #050505); }
+
+    .strip { will-change: transform; }
+
+    .sym {
+      height: var(--sym);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: calc(var(--sym) * 0.62);
+      color: #f5f5f5;
+      user-select: none;
+    }
+    .sym img { width: 85%; height: 85%; object-fit: contain; pointer-events: none; }
+
+    .payline {
+      position: absolute; left: -6px; right: -6px; top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(245,245,245,0.5) 0 10px, transparent 10px calc(100% - 10px), rgba(245,245,245,0.5) calc(100% - 10px));
+      z-index: 3; pointer-events: none;
+    }
+
+    .slot-msg {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.45;
+      min-height: 1.2em;
+      transition: opacity 0.3s;
+    }
+    .machine.win .slot-msg, .machine.jackpot .slot-msg { opacity: 1; }
+    .machine.jackpot .slot-msg { color: #e8b923; }
+
+    /* lever */
+    .lever {
+      position: relative;
+      width: 44px;
+      height: 240px;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+    }
+    .lever:active { cursor: grabbing; }
+    .lever-rod {
+      position: absolute;
+      left: 50%;
+      width: 6px;
+      margin-left: -3px;
+      background: linear-gradient(90deg, #555, #ddd, #555);
+    }
+    .lever-knob {
+      position: absolute;
+      left: 50%;
+      width: 34px; height: 34px;
+      margin-left: -17px; margin-top: -17px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff, #bbb 45%, #555);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+    }
+    .lever-base {
+      position: absolute;
+      left: 50%; top: 150px;
+      width: 26px; height: 26px;
+      margin-left: -13px; margin-top: -13px;
+      border-radius: 4px;
+      background: #1a1a1a;
+      border: 1px solid rgba(245,245,245,0.25);
+    }
+
+    .slot-stats, .slot-note {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      opacity: 0.3;
+      text-align: center;
+      line-height: 2;
+    }
+
+    @media (max-width: 640px) {
+      .machine { --sym: 74px; --reel-w: 74px; padding: 0.8rem; }
+      .machine-title { font-size: 1.1rem; }
+      .slot-row { gap: 0.6rem; }
+      .lever { width: 36px; height: 200px; }
+      .lever-base { top: 125px; }
+      .nav-mobile { gap: 0.4rem; }
+      .nav-join-mobile { padding: 0.35rem 0.55rem; letter-spacing: 0.12em; }
+      .nav-logo { font-size: 1.05rem; letter-spacing: 0.2em; }
+    }
   </style>
 </head>
 <body>
@@ -254,10 +400,12 @@
     <a class="nav-logo" onclick="showPage('home')">Enviable</a>
     <ul class="nav-links">
       <li><a onclick="showPage('about')" class="join">About Us</a></li>
+      <li><a onclick="showPage('gambling')" class="join">Gambling</a></li>
       <li><a href="https://discord.gg/enviable" target="_blank" class="join">Join</a></li>
     </ul>
     <div class="nav-mobile">
       <a onclick="showPage('about')" class="nav-join-mobile">About Us</a>
+      <a onclick="showPage('gambling')" class="nav-join-mobile">Gambling</a>
       <a href="https://discord.gg/enviable" target="_blank" class="nav-join-mobile">Join</a>
     </div>
   </nav>
@@ -300,12 +448,43 @@
     </footer>
   </div>
 
+  <!-- GAMBLING -->
+  <div class="page" id="page-gambling">
+    <div class="slot-inner">
+      <p class="about-label">Gambling</p>
+      <div class="slot-row">
+        <div class="machine" id="machine">
+          <div class="machine-title">Enviable Slots</div>
+          <div class="reels">
+            <div class="reel"><div class="strip"></div></div>
+            <div class="reel"><div class="strip"></div></div>
+            <div class="reel"><div class="strip"></div></div>
+            <div class="payline"></div>
+          </div>
+          <div class="slot-msg" id="slotMsg">Pull the lever</div>
+        </div>
+        <div class="lever" id="lever" title="Pull me">
+          <div class="lever-rod" id="leverRod"></div>
+          <div class="lever-base"></div>
+          <div class="lever-knob" id="leverKnob"></div>
+        </div>
+      </div>
+      <p class="slot-stats" id="slotStats">Spins 0 · Wins 0 · Jackpots 0</p>
+      <p class="slot-note">Just for fun · no real money · no bets</p>
+    </div>
+    <footer>
+      <span>© 2025 Enviable</span>
+      <span>German Gaming Community</span>
+    </footer>
+  </div>
+
   <script>
     // ── PAGE ROUTING ──
     function showPage(name) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page-' + name).classList.add('active');
       window.scrollTo(0, 0);
+      if (name === 'gambling' && window.__slotDraw) window.__slotDraw();
     }
 
     // ── SLIDER ──
@@ -393,6 +572,164 @@
       if (e.key === 'ArrowRight') goTo(current + 1);
       if (e.key === 'ArrowLeft') goTo(current - 1);
     });
+
+    // ── SLOT MACHINE (just for fun, no money) ──
+    (function () {
+      const SYMBOLS = [
+        { id: 'case', html: '<img src="case-emblem.png" alt="Gold Case">', w: 1 },
+        { id: '7',    html: '7', w: 3 },
+        { id: 'E',    html: 'E', w: 3 },
+        { id: 'spade',html: '&#9824;', w: 4 },
+        { id: 'diam', html: '&#9670;', w: 4 },
+        { id: 'star', html: '&#9733;', w: 4 },
+      ];
+      const pool = SYMBOLS.flatMap(s => Array(s.w).fill(s));
+      const pick = () => pool[Math.floor(Math.random() * pool.length)];
+
+      const machine = document.getElementById('machine');
+      const strips = [...machine.querySelectorAll('.strip')];
+      const msg = document.getElementById('slotMsg');
+      const statsEl = document.getElementById('slotStats');
+      const stats = { spins: 0, wins: 0, jackpots: 0 };
+      let current = strips.map(() => pick());
+      let spinning = false;
+
+      const symEl = s => `<div class="sym">${s.html}</div>`;
+      const symH = () => machine.querySelector('.reel').offsetHeight / 1.5;
+
+      strips.forEach((st, i) => {
+        st.innerHTML = symEl(current[i]);
+        st.style.transform = `translateY(${symH() * 0.25}px)`;
+      });
+
+      const LOSE = ['Again.', 'One more.', 'Trust the process', 'Blueiron disapproves', 'Not today', 'Next one hits'];
+
+      function spin() {
+        if (spinning) return;
+        spinning = true;
+        machine.classList.remove('win', 'jackpot');
+        msg.textContent = 'Rolling...';
+        const h = symH();
+        const result = strips.map(() => pick());
+        let done = 0;
+
+        strips.forEach((st, i) => {
+          const count = 22 + i * 7;
+          const items = [current[i]];
+          for (let k = 1; k < count; k++) items.push(pick());
+          items.push(result[i]);
+          st.style.transition = 'none';
+          st.innerHTML = items.map(symEl).join('');
+          st.style.transform = `translateY(${h * 0.25}px)`;
+          st.offsetHeight; // reflow
+          const dur = 1.4 + i * 0.45;
+          st.style.transition = `transform ${dur}s cubic-bezier(0.12, 0.8, 0.25, 1.02)`;
+          st.style.transform = `translateY(${-(items.length - 1) * h + h * 0.25}px)`;
+          st.addEventListener('transitionend', function end() {
+            st.removeEventListener('transitionend', end);
+            st.style.transition = 'none';
+            st.innerHTML = symEl(result[i]);
+            st.style.transform = `translateY(${h * 0.25}px)`;
+            if (++done === strips.length) finish(result);
+          });
+        });
+      }
+
+      function finish(r) {
+        current = r;
+        stats.spins++;
+        const ids = r.map(s => s.id);
+        const same3 = ids[0] === ids[1] && ids[1] === ids[2];
+        const same2 = !same3 && (ids[0] === ids[1] || ids[1] === ids[2] || ids[0] === ids[2]);
+        if (same3 && ids[0] === 'case') {
+          stats.jackpots++; stats.wins++;
+          machine.classList.add('jackpot');
+          msg.textContent = 'GOLD CASE JACKPOT';
+        } else if (same3) {
+          stats.wins++;
+          machine.classList.add('win');
+          msg.textContent = ids[0] === 'E' ? 'ENVIABLE!' : ids[0] === '7' ? 'Triple seven' : 'Winner';
+        } else if (same2) {
+          msg.textContent = 'So close';
+        } else {
+          msg.textContent = LOSE[Math.floor(Math.random() * LOSE.length)];
+        }
+        statsEl.textContent = `Spins ${stats.spins} · Wins ${stats.wins} · Jackpots ${stats.jackpots}`;
+        spinning = false;
+      }
+
+      // ── LEVER ──
+      const lever = document.getElementById('lever');
+      const rod = document.getElementById('leverRod');
+      const knob = document.getElementById('leverKnob');
+      const geo = () => {
+        const H = lever.offsetHeight;
+        const pivot = lever.querySelector('.lever-base').offsetTop;
+        return { top: 18, bottom: H - 18, pivot };
+      };
+      let pos = 0; // 0 = up, 1 = fully pulled
+      function draw() {
+        const g = geo();
+        const y = g.top + (g.bottom - g.top) * pos;
+        knob.style.top = y + 'px';
+        rod.style.top = Math.min(y, g.pivot) + 'px';
+        rod.style.height = Math.abs(g.pivot - y) + 'px';
+      }
+      function springBack() {
+        const start = pos, t0 = performance.now(), D = 450;
+        (function step(t) {
+          const k = Math.min(1, (t - t0) / D);
+          const e = 1 - Math.pow(1 - k, 3);
+          pos = start * (1 - e) + Math.sin(k * Math.PI) * -0.04 * start;
+          draw();
+          if (k < 1) requestAnimationFrame(step); else { pos = 0; draw(); }
+        })(t0);
+      }
+      function autoPull() {
+        if (spinning) return;
+        const t0 = performance.now(), D = 220;
+        (function step(t) {
+          const k = Math.min(1, (t - t0) / D);
+          pos = k * k; draw();
+          if (k < 1) requestAnimationFrame(step); else { spin(); springBack(); }
+        })(t0);
+      }
+
+      let dragging = false, startY = 0, moved = false;
+      lever.addEventListener('pointerdown', e => {
+        if (spinning) return;
+        dragging = true; moved = false; startY = e.clientY;
+        lever.setPointerCapture(e.pointerId);
+      });
+      lever.addEventListener('pointermove', e => {
+        if (!dragging) return;
+        const g = geo();
+        const d = (e.clientY - startY) / (g.bottom - g.top);
+        if (Math.abs(e.clientY - startY) > 4) moved = true;
+        pos = Math.max(0, Math.min(1, d)); draw();
+      });
+      lever.addEventListener('pointerup', () => {
+        if (!dragging) return;
+        dragging = false;
+        if (!moved) { autoPull(); return; }
+        if (pos > 0.6) spin();
+        springBack();
+      });
+      lever.addEventListener('pointercancel', () => { dragging = false; springBack(); });
+
+      document.addEventListener('keydown', e => {
+        if (e.code === 'Space' && document.getElementById('page-gambling').classList.contains('active')) {
+          e.preventDefault(); autoPull();
+        }
+      });
+
+      draw();
+      window.addEventListener('resize', () => window.__slotDraw());
+      window.__slotDraw = () => {
+        draw();
+        if (!spinning) strips.forEach(st => { st.style.transform = `translateY(${symH() * 0.25}px)`; });
+      };
+    })();
   </script>
 
 </body>
