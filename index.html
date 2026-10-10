@@ -484,7 +484,22 @@
     .rl-btn:disabled { opacity: 0.3; cursor: default; }
     .rl-spin { border-color: #e8b923; color: #e8b923; padding: 0.7rem 2rem; }
     .rl-spin:hover { background: rgba(232,185,35,0.1); border-color: #e8b923; }
-    .rl-refill { cursor: pointer; text-decoration: underline; color: inherit; }
+    .rl-balance-row { display: flex; align-items: center; gap: 0.9rem; }
+    .rl-refill {
+      background: none; cursor: pointer;
+      color: #e8b923; border: 1px solid rgba(232,185,35,0.6);
+      padding: 0.45rem 0.8rem;
+      font-family: 'Space Mono', monospace; font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .rl-refill:hover { background: rgba(232,185,35,0.12); border-color: #e8b923; }
+    .rl-refill:disabled { opacity: 0.3; cursor: default; }
+    .rl-refill.low { background: #e8b923; color: #050505; border-color: #e8b923; animation: refillPulse 1.4s ease-in-out infinite; }
+    @keyframes refillPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(232,185,35,0.55); }
+      50%      { box-shadow: 0 0 0 7px rgba(232,185,35,0); }
+    }
 
     @media (max-width: 760px) {
       .lobby-grid { grid-template-columns: 1fr; width: 100%; max-width: 300px; }
@@ -711,7 +726,10 @@
           <div class="rl-result" id="rlResult"><span class="rl-num">–</span></div>
           <div class="rl-msg" id="rlMsg">Place your chips</div>
           <div class="rl-history" id="rlHistory"></div>
-          <div class="rl-balance">Chips <span id="rlBalance">1000</span></div>
+          <div class="rl-balance-row">
+            <div class="rl-balance">Chips <span id="rlBalance">1000</span></div>
+            <button class="rl-refill" id="rlRefill">+ Refill</button>
+          </div>
           <div class="rl-bet">On table <span id="rlBet">0</span></div>
         </div>
       </div>
@@ -731,7 +749,7 @@
           <button class="rl-btn rl-spin" id="rlSpin">Spin</button>
         </div>
       </div>
-      <p class="slot-note">Just for fun · play chips only · no real money<br><a class="rl-refill" id="rlRefill">Refill chips</a></p>
+      <p class="slot-note">Just for fun · play chips only · no real money</p>
     </div>
     <footer>
       <span>© 2026 <span id="luckyRl">Enviable</span></span>
@@ -1066,6 +1084,8 @@
 
       function render() {
         balEl.textContent = balance;
+        $('rlRefill').disabled = spinning;
+        $('rlRefill').classList.toggle('low', !spinning && balance + total() < 10);
         betEl.textContent = total();
         cells.forEach(c => {
           let st = c.el.querySelector('.rl-stake');
@@ -1275,7 +1295,7 @@
         while (histEl.children.length > 12) histEl.lastChild.remove();
         bets = {}; log = [];
         spinning = false;
-        if (balance <= 0) msgEl.textContent += ' · Out of chips — refill below';
+        if (balance <= 0) msgEl.textContent += ' · Out of chips — hit Refill';
         save(); render();
       }
 
