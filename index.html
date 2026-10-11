@@ -198,6 +198,78 @@
     }
     .hero-join:hover { border-color: #f5f5f5; background: rgba(245,245,245,0.05); }
 
+    .scroll-hint {
+      margin-top: 1.5rem;
+      color: rgba(245,245,245,0.4); text-decoration: none;
+      font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase;
+      transition: color 0.2s;
+      animation: fadeIn 1.5s ease 0.8s both;
+    }
+    .scroll-hint:hover { color: rgba(245,245,245,0.85); }
+
+    /* ── GAMES ── */
+    .games {
+      max-width: 1100px; margin: 0 auto;
+      padding: 4rem 1.5rem 6rem;
+      scroll-margin-top: 70px;
+    }
+    .games .about-label { margin-bottom: 2rem; }
+    .games-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .game-card {
+      position: relative;
+      display: flex; flex-direction: column;
+      padding: 1.6rem 1.4rem 1.4rem;
+      min-height: 190px;
+      background: #0a0a0a;
+      border: 1px solid rgba(245,245,245,0.12);
+      transition: border-color 0.25s, background 0.25s, transform 0.25s;
+      overflow: hidden;
+    }
+    .game-card::after {
+      content: ''; position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
+      background: #f5f5f5; transition: width 0.4s ease;
+    }
+    .game-card:hover { border-color: rgba(245,245,245,0.45); background: #0f0f0f; transform: translateY(-3px); }
+    .game-card:hover::after { width: 100%; }
+    .game-card.has-clan::after { background: #e8b923; }
+    .game-idx {
+      position: absolute; top: 1rem; right: 1.2rem;
+      font-size: 0.55rem; letter-spacing: 0.2em; opacity: 0.25;
+    }
+    .game-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.1rem; letter-spacing: 0.08em; line-height: 1;
+      padding-right: 2rem;
+    }
+    .game-genre {
+      margin-top: 0.5rem;
+      font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; opacity: 0.35;
+    }
+    .game-clan {
+      margin-top: auto; padding-top: 1.4rem;
+      display: flex; align-items: baseline; gap: 0.7rem;
+    }
+    .clan-label { font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; opacity: 0.35; }
+    .clan-name { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; }
+    .game-clan.muted .clan-name { opacity: 0.25; font-weight: 400; }
+    .has-clan .clan-name { color: #e8b923; }
+    .game-link {
+      margin-top: 0.8rem; align-self: flex-start;
+      color: #f5f5f5; text-decoration: none;
+      font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+      border: 1px solid rgba(245,245,245,0.25);
+      padding: 0.45rem 0.8rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .game-link:hover { border-color: #f5f5f5; background: rgba(245,245,245,0.05); }
+
+    @media (max-width: 900px) { .games-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) {
+      .games-grid { grid-template-columns: 1fr; }
+      .game-card { min-height: 0; }
+      .games { padding: 3rem 1rem 4rem; }
+    }
+
     @media (max-width: 640px) {
       .slide-card { width: calc((100vw - 4 * 8px) / 3); }
       .slider-track { animation-duration: 60s; }
@@ -627,7 +699,50 @@
         <span><b id="dcMembers">–</b> members</span>
       </div>
       <a class="hero-join" href="https://discord.gg/enviable" target="_blank">Join the Discord</a>
+      <a class="scroll-hint" href="#games" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'});return false;">What we play &#8595;</a>
     </div>
+
+    <section class="games" id="games">
+      <p class="about-label">What we play</p>
+      <div class="games-grid">
+        <div class="game-card has-clan">
+          <span class="game-idx">01</span>
+          <div class="game-name">Destiny 2</div>
+          <div class="game-genre">Looter Shooter</div>
+          <div class="game-clan"><span class="clan-label">Clan</span><span class="clan-name">Enviable</span></div><a class="game-link" href="https://www.bungie.net/7/en/Clan/Profile/5302897" target="_blank" rel="noopener">View Clan &#8599;</a>
+        </div>
+        <div class="game-card">
+          <span class="game-idx">02</span>
+          <div class="game-name">Apex Legends</div>
+          <div class="game-genre">Battle Royale</div>
+          <div class="game-clan muted"><span class="clan-label">Clan</span><span class="clan-name">—</span></div>
+        </div>
+        <div class="game-card">
+          <span class="game-idx">03</span>
+          <div class="game-name">Warframe</div>
+          <div class="game-genre">Looter Shooter</div>
+          <div class="game-clan muted"><span class="clan-label">Clan</span><span class="clan-name">—</span></div>
+        </div>
+        <div class="game-card">
+          <span class="game-idx">04</span>
+          <div class="game-name">Minecraft</div>
+          <div class="game-genre">Sandbox</div>
+          <div class="game-clan muted"><span class="clan-label">Clan</span><span class="clan-name">—</span></div>
+        </div>
+        <div class="game-card">
+          <span class="game-idx">05</span>
+          <div class="game-name">Rainbow Six Siege</div>
+          <div class="game-genre">Tactical Shooter</div>
+          <div class="game-clan muted"><span class="clan-label">Clan</span><span class="clan-name">—</span></div>
+        </div>
+        <div class="game-card has-clan">
+          <span class="game-idx">06</span>
+          <div class="game-name">Clash of Clans</div>
+          <div class="game-genre">Strategy</div>
+          <div class="game-clan"><span class="clan-label">Clan</span><span class="clan-name">these nutzz</span></div>
+        </div>
+      </div>
+    </section>
     <footer>
       <span>© 2026 Enviable</span>
       <span>German Gaming Community</span>
