@@ -16,6 +16,12 @@ window.ENVIABLE_ROSTER = [
     name: "Luca",
     bungie: "Luca#0888",
     raid: "https://raid.report/pc/4611686018483106170",
-    ubisoft: ""
+    ubisoft: "ILuca"
+  },
+  {
+    name: "Blueiron",
+    bungie: "",
+    raid: "",
+    ubisoft: "Blueiron_"
   },
 ];
