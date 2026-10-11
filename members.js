@@ -4,8 +4,7 @@
   Neuen Spieler hinzufügen: einen Block { ... } kopieren, Komma dazwischen nicht vergessen.
 
   name    – Anzeigename auf der Seite
-  bungie  – Bungie-Name mit #Nummer (z. B. "Luca#0888")
-            -> erzeugt automatisch den Destiny-Tracker-Link
+  bungie  – Bungie-Name mit #Nummer (z. B. "Luca#0888"), wird unter dem Namen angezeigt
   raid    – (optional) kompletter Link von raid.report, z. B. "https://raid.report/pc/4611686018..."
             So findest du ihn: raid.report öffnen, Bungie-Namen suchen, Link aus der Adresszeile kopieren.
             -> erzeugt automatisch auch den dungeon.report-Link

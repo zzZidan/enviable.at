@@ -1008,9 +1008,6 @@
           out.push(link(raid, 'Raid Report', true));
           out.push(link(raid.replace('://raid.report/', '://dungeon.report/'), 'Dungeon Report'));
         }
-        if (m.bungie && m.bungie.includes('#')) {
-          out.push(link('https://destinytracker.com/destiny-2/profile/bungie/' + encodeURIComponent(m.bungie.trim()) + '/overview', 'Destiny Tracker'));
-        }
         return out;
       }
       function r6Links(m) {
