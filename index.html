@@ -964,7 +964,6 @@
     </footer>
   </div>
 
-  <script src="members.js"></script>
   <script>
     // ── PAGE ROUTING ──
     function showPage(name) {
@@ -1050,6 +1049,12 @@
         render();
       });
       search.addEventListener('input', render);
+
+      // always load the newest roster (no stale browser cache)
+      const sc = document.createElement('script');
+      sc.src = 'members.js?t=' + Date.now();
+      sc.onload = render;
+      document.head.appendChild(sc);
 
       window.openRoster = f => {
         filter = f || 'all';
