@@ -7,7 +7,7 @@
   bungie  – Bungie-Name mit #Nummer (z. B. "Luca#0888"), wird unter dem Namen angezeigt
   raid    – (optional) kompletter Link von raid.report, z. B. "https://raid.report/pc/4611686018..."
             So findest du ihn: raid.report öffnen, Bungie-Namen suchen, Link aus der Adresszeile kopieren.
-            -> erzeugt automatisch auch den dungeon.report-Link
+            -> erzeugt automatisch auch die Links zu dungeon.report und Braytech
   ubisoft – (optional) Ubisoft-Name für Rainbow Six Siege
             -> erzeugt automatisch den R6-Tracker-Link
 */

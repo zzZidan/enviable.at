@@ -1007,6 +1007,9 @@
         if (/^https:\/\/raid\.report\//.test(raid)) {
           out.push(link(raid, 'Raid Report', true));
           out.push(link(raid.replace('://raid.report/', '://dungeon.report/'), 'Dungeon Report'));
+          const m2 = raid.match(/raid\.report\/(pc|ps|xb|stadia)\/(\d+)/);
+          const TYPE = { xb: 1, ps: 2, pc: 3, stadia: 5 };
+          if (m2) out.push(link(`https://bray.tech/${TYPE[m2[1]]}/${m2[2]}`, 'Braytech'));
         }
         return out;
       }
