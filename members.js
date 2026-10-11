@@ -22,6 +22,6 @@ window.ENVIABLE_ROSTER = [
     name: "Blueiron",
     bungie: "",
     raid: "",
-    ubisoft: "Blueiron_"
+    ubisoft: "Blueiron"
   },
 ];
