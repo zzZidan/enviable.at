@@ -262,6 +262,11 @@
       transition: border-color 0.2s, background 0.2s;
     }
     .game-link:hover { border-color: #f5f5f5; background: rgba(245,245,245,0.05); }
+    button.game-link { background: none; cursor: pointer; font-family: 'Space Mono', monospace; }
+    .game-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+    .game-actions .game-link { margin-top: 0; }
+    .clan-tag { letter-spacing: 0.12em; }
+    .clan-tag.copied { border-color: #e8b923; color: #e8b923; }
 
     @media (max-width: 900px) { .games-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 560px) {
@@ -725,21 +730,19 @@
         </div>
         <div class="game-card">
           <span class="game-idx">04</span>
-          <div class="game-name">Minecraft</div>
-          <div class="game-genre">Sandbox</div>
-          <div class="game-clan muted"><span class="clan-label">Clan</span><span class="clan-name">—</span></div>
-        </div>
-        <div class="game-card">
-          <span class="game-idx">05</span>
           <div class="game-name">Rainbow Six Siege</div>
           <div class="game-genre">Tactical Shooter</div>
           <div class="game-clan muted"><span class="clan-label">Clan</span><span class="clan-name">—</span></div>
         </div>
         <div class="game-card has-clan">
-          <span class="game-idx">06</span>
+          <span class="game-idx">05</span>
           <div class="game-name">Clash of Clans</div>
           <div class="game-genre">Strategy</div>
           <div class="game-clan"><span class="clan-label">Clan</span><span class="clan-name">these nutzz</span></div>
+          <div class="game-actions">
+            <button class="game-link clan-tag" data-copy="#2Q098208C" title="Copy clan tag">#2Q098208C <span class="copy-ico">&#10697;</span></button>
+            <a class="game-link" href="https://link.clashofclans.com/en?action=OpenClanProfile&amp;tag=2Q098208C" target="_blank" rel="noopener">Open in game &#8599;</a>
+          </div>
         </div>
       </div>
     </section>
@@ -896,6 +899,21 @@
         track.appendChild(card);
       }
     }
+
+    // ── COPY CLAN TAG ──
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+      const original = btn.innerHTML;
+      btn.addEventListener('click', async () => {
+        const text = btn.dataset.copy;
+        try { await navigator.clipboard.writeText(text); }
+        catch (e) {
+          const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t);
+          t.select(); try { document.execCommand('copy'); } catch (_) {} t.remove();
+        }
+        btn.classList.add('copied'); btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = original; }, 1500);
+      });
+    });
 
     // ── LIVE DISCORD COUNT ──
     async function loadDiscord() {
